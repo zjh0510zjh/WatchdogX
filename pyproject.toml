@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "watchdogx"
+version = "0.1.0"
+description = "Lightweight Multi-Agent Collaboration Framework for Microservice Self-Healing"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [{name = "ZJH0510ZJH"}]
+requires-python = ">=3.10"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "openai>=1.0",
+    "pyyaml>=6.0",
+    "requests>=2.28",
+    "numpy>=1.24",
+    "faiss-cpu>=1.7",
+    "prometheus-client>=0.17",
+]
+[project.urls]
+Homepage = "https://github.com/zjh0510zjh/WatchdogX"
+Repository = "https://github.com/zjh0510zjh/WatchdogX.git"
+[project.scripts]
+watchdogx = "watchdogx.cli:main"
+[tool.setuptools.packages.find]
+where = ["src"]
