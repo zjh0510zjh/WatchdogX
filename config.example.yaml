@@ -1,0 +1,53 @@
+# WatchdogX Configuration Example
+agents:
+  monitor:
+    interval_seconds: 30
+    prometheus_endpoint: "http://localhost:9090"
+    log_sources:
+      - type: docker
+        containers: ["*"]
+      - type: kubernetes
+        namespace: "production"
+    alert_rules:
+      - name: high_error_rate
+        metric: http_5xx_rate
+        threshold: 0.05
+        duration: 5m
+      - name: high_latency
+        metric: p99_latency_ms
+        threshold: 2000
+        duration: 3m
+
+  diagnosis:
+    model: "gpt-4"
+    max_reasoning_steps: 10
+    similarity_threshold: 0.75
+    memory:
+      store_path: "./memory_store"
+      max_cases: 10000
+    tools:
+      - log_analyzer
+      - metrics_explorer
+      - topology_tracer
+
+  executor:
+    max_retries: 3
+    escalation_timeout_minutes: 5
+    allowed_actions:
+      - restart_service
+      - scale_replicas
+      - rollback_deployment
+    slack_webhook: "${WATCHDOGX_SLACK_WEBHOOK}"
+
+  verify:
+    health_endpoints:
+      - "/health"
+      - "/ready"
+    max_check_retries: 5
+    check_interval_seconds: 10
+
+llm:
+  provider: openai
+  api_key: "${OPENAI_API_KEY}"
+  temperature: 0.1
+  max_tokens: 4096
