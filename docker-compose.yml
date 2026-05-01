@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+  watchdogx:
+    build: .
+    image: watchdogx:latest
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      - ./config.yaml:/app/config.yaml:ro
+      - ./memory_store:/app/memory_store
+    restart: unless-stopped
+    ports:
+      - "9191:9191"
